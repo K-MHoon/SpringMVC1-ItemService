@@ -255,11 +255,15 @@ public class BasicItemController {
         return "redirect:/basic/items/{itemId}";
     }
 
-    @InitBinder
-    public void init(WebDataBinder dataBinder) {
-        log.info("init binder {}", dataBinder);
-        dataBinder.addValidators(itemValidator);
-    }
+    /**
+     * 오류 검증기 중복 적용 여부가 있기 때문에 코드 제거
+     * @return
+     */
+//    @InitBinder
+//    public void init(WebDataBinder dataBinder) {
+//        log.info("init binder {}", dataBinder);
+//        dataBinder.addValidators(itemValidator);
+//    }
 
     /*
         ItemV8 개선.
