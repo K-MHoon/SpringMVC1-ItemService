@@ -64,7 +64,7 @@ public class ValidationItemController {
         return "redirect:/validation/v3/items/{itemId}";
     }
 
-    @PostMapping("/add")
+//    @PostMapping("/add")
     public String addItemV2(@Validated(SaveCheck.class) @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         // 전체 예외 케이스
         if (item.getPrice() != null && item.getQuantity() != null) {
@@ -80,6 +80,32 @@ public class ValidationItemController {
         }
 
         Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/validation/v3/items/{itemId}";
+    }
+
+    @PostMapping("/add")
+    public String addItemV3(@Validated @ModelAttribute("item") ItemSaveForm item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        // 전체 예외 케이스
+        if (item.getPrice() != null && item.getQuantity() != null) {
+            int resultPrice = item.getPrice() * item.getQuantity();
+            if(resultPrice < 10000) {
+                bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+            }
+        }
+
+        if(bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "validation/v3/addForm";
+        }
+
+        Item createItem = Item.builder().itemName(item.getItemName())
+                .price(item.getPrice())
+                .quantity(item.getQuantity())
+                .build();
+
+        Item savedItem = itemRepository.save(createItem);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);
         return "redirect:/validation/v3/items/{itemId}";
@@ -110,7 +136,7 @@ public class ValidationItemController {
         return "redirect:/validation/v3/items/{itemId}";
     }
 
-    @PostMapping("/{itemId}/edit")
+//    @PostMapping("/{itemId}/edit")
     public String editV2(@PathVariable Long itemId, @Validated(UpdateCheck.class) @ModelAttribute Item item, BindingResult bindingResult) {
         if (item.getPrice() != null && item.getQuantity() != null) {
             int resultPrice = item.getPrice() * item.getQuantity();
@@ -125,6 +151,29 @@ public class ValidationItemController {
         }
 
         itemRepository.update(itemId, item);
+        return "redirect:/validation/v3/items/{itemId}";
+    }
+
+    @PostMapping("/{itemId}/edit")
+    public String editV3(@PathVariable Long itemId, @Validated @ModelAttribute("item") ItemUpdateForm item, BindingResult bindingResult) {
+        if (item.getPrice() != null && item.getQuantity() != null) {
+            int resultPrice = item.getPrice() * item.getQuantity();
+            if(resultPrice < 10000) {
+                bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+            }
+        }
+
+        if(bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "validation/v3/addForm";
+        }
+
+        Item updateItem = Item.builder().itemName(item.getItemName())
+                .price(item.getPrice())
+                .quantity(item.getQuantity())
+                .build();
+
+        itemRepository.update(itemId, updateItem);
         return "redirect:/validation/v3/items/{itemId}";
     }
 
