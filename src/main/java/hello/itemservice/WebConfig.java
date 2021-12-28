@@ -29,12 +29,12 @@ public class WebConfig implements WebMvcConfigurer {
         return filterRegistrationBean;
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LogInterceptor())
-                .order(1)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**");
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new LogInterceptor())
+//                .order(1)
+//                .addPathPatterns("/**")
+//                .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**");
 
 //        registry.addInterceptor(new LoginCheckInterceptor())
 //                .order(2)
@@ -43,7 +43,7 @@ public class WebConfig implements WebMvcConfigurer {
 //                        "/", "/members/add", "/login", "/logout",
 //                        "/css/**", "/*.ico", "/error", "/error-page/**"
 //                );
-    }
+//    }
 
 //    @Override
 //    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {

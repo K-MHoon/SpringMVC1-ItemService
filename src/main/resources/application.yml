@@ -5,7 +5,12 @@ server:
             tracking-modes: cookie
     error:
         whitelabel:
-            enabled: false
+            enabled: true
+        path: /error
+        include-exception: true
+        include-message: on_param
+        include-stacktrace: on_param
+        include-binding-errors: on_param
 
 logging:
     level:
