@@ -8,9 +8,9 @@ server:
             enabled: true
         path: /error
         include-exception: true
-        include-message: on_param
-        include-stacktrace: on_param
-        include-binding-errors: on_param
+        include-message: always
+        include-stacktrace: always
+        include-binding-errors: always
 
 logging:
     level:
