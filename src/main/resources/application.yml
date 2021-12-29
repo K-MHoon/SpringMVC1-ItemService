@@ -3,6 +3,9 @@ server:
     servlet:
         session:
             tracking-modes: cookie
+        multipart:
+            max-file-size: 1MB
+            max-request-size: 10MB
     error:
         whitelabel:
             enabled: true
