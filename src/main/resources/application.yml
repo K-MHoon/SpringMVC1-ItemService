@@ -15,12 +15,12 @@ server:
         include-stacktrace: always
         include-binding-errors: always
 
-logging:
-    level:
-        org:
-            apache:
-                coyote:
-                    http11: debug
+#logging:
+#    level:
+#        org:
+#            apache:
+#                coyote:
+#                    http11: debug
 
 spring:
     messages:
